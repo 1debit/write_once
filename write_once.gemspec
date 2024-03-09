@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = ""
   spec.homepage = "https://github.com/1debit/write_once"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 3.1"
+  spec.required_ruby_version = ">= 3.0"
 
 
   spec.metadata["homepage_uri"] = spec.homepage
@@ -34,6 +34,8 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   spec.add_dependency "rails", ">= 5.0"
   spec.add_development_dependency "debug"
+  spec.add_development_dependency "activerecord", "= 7.1.2"
+  spec.add_development_dependency "sqlite3"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "write_once/version"
+require_relative "write_once/configuration"
 require "active_record"
 require "active_support/concern"
 require "active_support/hash_with_indifferent_access"
@@ -10,11 +11,17 @@ class WriteOnceAttributeError < StandardError; end
 module WriteOnce
   extend ActiveSupport::Concern
 
-  # rubocop:disable ThreadSafety/ClassAndModuleAttributes
   included do
     class_attribute :_attr_write_once, instance_accessor: false, default: []
   end
-  # rubocop:enable ThreadSafety/ClassAndModuleAttributes
+
+  def self.configure(&block)
+    block.call(config)
+  end
+
+  def self.config
+    @config ||= Configuration.new
+  end
 
   module ClassMethods
     # Attributes listed as write_once will be used to create a new record.
@@ -79,11 +86,11 @@ module WriteOnce
     end
 
     def handle_error(attr_name, value)
-      if Rails.application.config.write_only_nil_strict
+      if WriteOnce.config.enforce_errors
         raise WriteOnceAttributeError, attr_name
       else
-        Rails.logger.warn(
-          message: "Write only nil attribute #{attr_name} changed",
+        WriteOnce.config.logger.warn(
+          message: "Write once attribute #{attr_name} changed",
           old_value: send(attr_name),
           new_value: value,
         )

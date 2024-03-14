@@ -7,6 +7,7 @@ The difference is that while `attr_readonly` only allows writes during model cre
 This can be useful for model attributes that you do not want set during creation, but do want to enforce preventing overwrites for.
 
 ## Installation
+
 https://rubygems.org/gems/write_once
 
 Install the gem and add to the application's Gemfile by executing:
@@ -37,6 +38,7 @@ Other use cases include:
     * any attribute really that you care about only being set once that you can't set at creation time
 
 ## Configuration
+
 WriteOnce accepts two configuration values, both optional.
 
 To configure WriteOnce, create a file under `initializers/write_once.rb` as follows:
@@ -65,7 +67,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/write_once. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/write_once/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/1debit/write_once. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/1debit/write_once/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -73,4 +75,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the WriteOnce project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/write_once/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the WriteOnce project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/1debit/write_once/blob/main/CODE_OF_CONDUCT.md).

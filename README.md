@@ -1,8 +1,49 @@
 # WriteOnce
 
-TODO: Delete this and the text below, and describe your gem
+WriteOnce is a gem meant to mirror the behaviour of `attr_readonly`, which can be used on active record models to gate their write behaviour.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/write_once`. To experiment with that code, run `bin/console` for an interactive prompt.
+The difference is that while `attr_readonly` only allows writes during model creation, write once as the name infers, only allows attributes to be written to when they have no data present yet.
+
+This can be useful for model attributes that you do not want set during creation, but do want to enforce preventing overwrites for.
+
+## Configuration
+WriteOnce accepts two configuration values, both optional.
+
+To configure WriteOnce, create a file under `initializers/write_once.rb` as follows:
+
+```
+# frozen_string_literal: true
+
+WriteOnce.configure do |config|
+  
+  # enforce_errors has two possible values:
+  #   true - any time an invalid write is detected, a `WriteOnceAttributeError` will be raised.
+  #   false  - any time an invalid write is detected, a warn level message will be logged.
+  config.enforce_errors = false
+
+  # If you set enforce_errors above to false, you can configure a logger of your choice.
+  config.logger = Rails.logger.new
+end
+
+```
+
+## Example usages
+Let's say you have a timestamp column `first_enrolled_at` on an `Account` model. When you first create an account, the user has not enrolled yet and so the values should be nil. Later on though, when a user chooses to enroll, you want to set this to a timestamp.
+
+By setting `attr_writeonce` on your model:
+```
+  class Account < ApplicationRecord
+    attr_writeonce :first_enrolled_at
+  end
+```
+
+Setting this on your model will mean that accounts that already have a value present for `first_enrolled_at` will not allow new values to be assigned to that attribute. This includes both in memory assignment as well as storage backed persistence.
+
+Other use cases include:
+    * attributes that are computed and set at a later time
+    * attributes that require an async external service call to set
+    * attributes set via cron or backfill
+    * any attribute really that you care about only being set once that you can't set at creation time
 
 ## Installation
 

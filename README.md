@@ -6,6 +6,37 @@ The difference is that while `attr_readonly` only allows writes during model cre
 
 This can be useful for model attributes that you do not want set during creation, but do want to enforce preventing overwrites for.
 
+## Installation
+
+TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+
+Install the gem and add to the application's Gemfile by executing:
+
+    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+
+If bundler is not being used to manage dependencies, install the gem by executing:
+
+    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+
+## Usage
+
+Let's say you have a timestamp column `first_enrolled_at` on an `Account` model. When you first create an account, the user has not enrolled yet and so the values should be nil. Later on though, when a user chooses to enroll, you want to set this to a timestamp.
+
+By setting `attr_writeonce` on your model:
+```
+  class Account < ApplicationRecord
+    attr_writeonce :first_enrolled_at
+  end
+```
+
+Setting this on your model will mean that accounts that already have a value present for `first_enrolled_at` will not allow new values to be assigned to that attribute. This includes both in memory assignment as well as storage backed persistence.
+
+Other use cases include:
+    * attributes that are computed and set at a later time
+    * attributes that require an async external service call to set
+    * attributes set via cron or backfill
+    * any attribute really that you care about only being set once that you can't set at creation time
+
 ## Configuration
 WriteOnce accepts two configuration values, both optional.
 
@@ -26,40 +57,6 @@ WriteOnce.configure do |config|
 end
 
 ```
-
-## Example usages
-Let's say you have a timestamp column `first_enrolled_at` on an `Account` model. When you first create an account, the user has not enrolled yet and so the values should be nil. Later on though, when a user chooses to enroll, you want to set this to a timestamp.
-
-By setting `attr_writeonce` on your model:
-```
-  class Account < ApplicationRecord
-    attr_writeonce :first_enrolled_at
-  end
-```
-
-Setting this on your model will mean that accounts that already have a value present for `first_enrolled_at` will not allow new values to be assigned to that attribute. This includes both in memory assignment as well as storage backed persistence.
-
-Other use cases include:
-    * attributes that are computed and set at a later time
-    * attributes that require an async external service call to set
-    * attributes set via cron or backfill
-    * any attribute really that you care about only being set once that you can't set at creation time
-
-## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
-Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
-
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
-
-## Usage
-
-TODO: Write usage instructions here
 
 ## Development
 

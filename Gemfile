@@ -11,4 +11,4 @@ gem "rspec", "~> 3.0"
 
 gem "standard"
 
-gem 'appraisal'
+gem 'appraisal', "~> 2.5.0"

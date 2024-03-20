@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Braden Staudacher"]
   spec.email = ["braden.staudacher@chime.com"]
 
-  spec.summary = ""
-  spec.description = ""
+  spec.summary = "WriteOnce allows you to guard against multiple write on active record models."
+  spec.description = "WriteOnce can be useful for attributes you don't set during creation, but want to prevent overwrites to."
   spec.homepage = "https://github.com/1debit/write_once"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0"

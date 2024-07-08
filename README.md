@@ -23,7 +23,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 Let's say you have a timestamp column `first_enrolled_at` on an `Account` model. When you first create an account, the user has not enrolled yet and so the values should be nil. Later on though, when a user chooses to enroll, you want to set this to a timestamp.
 
 By setting `attr_write_once` on your model:
-```
+```ruby
   class Account < ApplicationRecord
     attr_write_once :first_enrolled_at
   end
@@ -43,7 +43,7 @@ WriteOnce accepts two configuration values, both optional.
 
 To configure WriteOnce, create a file under `initializers/write_once.rb` as follows:
 
-```
+```ruby
 # frozen_string_literal: true
 
 WriteOnce.configure do |config|
